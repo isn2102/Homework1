@@ -7,6 +7,7 @@ output: github_document
 Setup: load libraries
 ```{r libraries, message = FALSE}
 library(tidyverse)
+library(palmerpenguins)
 ```
 
 #### Problem 1: 
@@ -50,7 +51,22 @@ as.numeric(as.factor(pull(prob1_df, samp_greater))) * pull(prob1_df, samp)
 
 #### Problem 2: 
 
-```{r}
+Part A: Load datasets.
+```{r penguins}
+data("penguins", package = "palmerpenguins")
+```
+
+Part B: Describe penguin datasets. 
+
+The dataset penguins is `r nrow(penguins)` observations (rows) with information on `r ncol(penguins)` variables (columns). It contains variables: `r names(penguins)`. The variable species is a `r class(pull(penguins, "species"))` and contains the options: `r levels(pull(penguins, "species"))`. The variable island is a `r class(pull(penguins, "island"))` and contains the options: `r levels(pull(penguins, "island"))`. The variable bill_length_mm is `r class(pull(penguins, "bill_length_mm"))`. The variable bill_depth_mm is `r class(pull(penguins, "bill_depth_mm"))`. The variable flipper_length_mm is an `r class(pull(penguins, "flipper_length_mm"))`. The variable body_mass_g is an `r class(pull(penguins, "body_mass_g"))`. The variable sex is a `r class(pull(penguins, "sex"))` and contains the options: `r levels(pull(penguins, "sex"))`. The variable year is an `r class(pull(penguins, "body_mass_g"))`. The mean flipper length is `r mean(pull(penguins, "flipper_length_mm"), na.rm=TRUE)`.
+
+Part C: Make a plot. 
+```{r plots}
+ggplot(data = penguins, aes(bill_length_mm, flipper_length_mm, color = species)) + geom_point()
+
+ggsave("scatter_penguins.pdf", height = 4, width = 4)
 
 ```
+
+
 
