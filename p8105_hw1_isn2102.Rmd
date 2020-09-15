@@ -13,7 +13,7 @@ library(tidyverse)
 Create a data frame.
 Shortcut for inserting r code chunk is option+command+i
 
-```{r} 
+```{r dataframe} 
 prob1_df <- # Use <- outside of functions and = within functions
   tibble(
     samp = rnorm(10), 
@@ -24,7 +24,7 @@ prob1_df <- # Use <- outside of functions and = within functions
 ```
 
 Take the mean of each variable in the data frame.
-```{r}
+```{r mean}
 # Use pull(df, variable) to pull column from a tibble in tidyverse
 mean(pull(prob1_df, samp))
 mean(pull(prob1_df, samp_greater))
@@ -33,7 +33,7 @@ mean(pull(prob1_df, fac_vec)) # Cannot get mean of a factor
 ```
 
 I can get the mean of numbers and logical vectors but not characters or factors. 
-```{r}
+```{r numeric_convert}
 as.numeric(pull(prob1_df, samp))
 as.numeric(pull(prob1_df, samp_greater))
 as.numeric(pull(prob1_df, char_vec)) 
