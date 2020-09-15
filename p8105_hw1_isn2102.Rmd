@@ -5,13 +5,13 @@ output: github_document
 ---
 
 Setup: load libraries
-```{r}
+```{r libraries, message = FALSE}
 library(tidyverse)
 ```
 
 #### Problem 1: 
-Create a data frame.
-Shortcut for inserting r code chunk is option+command+i
+Part A: Create a data frame.
+(Shortcut for inserting r code chunk is option+command+i)
 
 ```{r dataframe} 
 prob1_df <- # Use <- outside of functions and = within functions
@@ -23,7 +23,7 @@ prob1_df <- # Use <- outside of functions and = within functions
 )
 ```
 
-Take the mean of each variable in the data frame.
+Part B: Take the mean of each variable in the data frame.
 ```{r mean}
 # Use pull(df, variable) to pull column from a tibble in tidyverse
 mean(pull(prob1_df, samp))
@@ -31,19 +31,22 @@ mean(pull(prob1_df, samp_greater))
 mean(pull(prob1_df, char_vec)) # Cannot get mean of a character
 mean(pull(prob1_df, fac_vec)) # Cannot get mean of a factor
 ```
+I can get the mean of numbers and logical vectors but not characters or factors.
 
-I can get the mean of numbers and logical vectors but not characters or factors. 
-```{r numeric_convert}
-as.numeric(pull(prob1_df, samp))
+Part C: Apply the as.numeric function to the logical, character, factor variables
+```{r numeric_convert, eval=FALSE}
 as.numeric(pull(prob1_df, samp_greater))
 as.numeric(pull(prob1_df, char_vec)) 
 as.numeric(pull(prob1_df, fac_vec))
 ```
+I can convert logical vectors to numeric (0s and 1s for false and true), and I can also force factors to be numeric (seemingly by the alphabetical order of the string for each level). The numbers assigned to each level do not reflect any particular meaning in relation to each other, which explains why R would not automatically produce a mean since this would often be meaningless. Characters are not able to be converted to numeric and show as NA which explains why we cannot get the mean for the character vector.
 
+Part D: Perform data conversions and operations on variables. 
 ```{r}
 as.numeric(pull(prob1_df, samp_greater)) * pull(prob1_df, samp)
+as.factor(pull(prob1_df, samp_greater)) * pull(prob1_df, samp)
+as.numeric(as.factor(pull(prob1_df, samp_greater))) * pull(prob1_df, samp)
 ```
-
 
 #### Problem 2: 
 
