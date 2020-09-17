@@ -6,63 +6,82 @@ output: github_document
 
 Setup: load libraries
 ```{r libraries, message = FALSE}
+
 library(tidyverse)
 library(palmerpenguins)
+
 ```
 
 #### Problem 1: 
-Part A: Create a data frame.
-(Shortcut for inserting r code chunk is option+command+i)
+**Part A: Create a data frame.**
+
+(Note: the shortcut for inserting r code chunk is option+command+i)
 
 ```{r dataframe} 
-prob1_df <- # Use <- outside of functions and = within functions
+
+# Use <- outside of functions and = within functions
+prob1_df <- 
   tibble(
     samp = rnorm(10), 
     samp_greater = samp > 0, 
-    char_vec = c("hi", "my", "name", "is", "Isabel", "and", "I", "live", "in", "Harlem"), 
-    fac_vec = factor(c("small", "medium", "large", "small", "medium", "large", "small", "medium", "large", "small"))
-)
+    char_vec = c("hi", "my", "name", "is", "Isabel", "and", "I", "live", 
+                 "in", "Harlem"), 
+    fac_vec = factor(c("small", "medium", "large", "small", "medium", 
+                       "large", "small", "medium", "large", "small"))
+  )
+
 ```
 
-Part B: Take the mean of each variable in the data frame.
+**Part B: Take the mean of each variable in the data frame.**
 ```{r mean}
+
 # Use pull(df, variable) to pull column from a tibble in tidyverse
 mean(pull(prob1_df, samp))
 mean(pull(prob1_df, samp_greater))
 mean(pull(prob1_df, char_vec)) # Cannot get mean of a character
 mean(pull(prob1_df, fac_vec)) # Cannot get mean of a factor
+
 ```
 I can get the mean of numbers and logical vectors but not characters or factors.
 
-Part C: Apply the as.numeric function to the logical, character, factor variables
+**Part C: Apply the as.numeric function to the logical, character, factor variables.**
 ```{r numeric_convert, eval=FALSE}
+
 as.numeric(pull(prob1_df, samp_greater))
 as.numeric(pull(prob1_df, char_vec)) 
 as.numeric(pull(prob1_df, fac_vec))
+
 ```
 I can convert logical vectors to numeric (0s and 1s for false and true), and I can also force factors to be numeric (seemingly by the alphabetical order of the string for each level). The numbers assigned to each level do not reflect any particular meaning in relation to each other, which explains why R would not automatically produce a mean since this would often be meaningless. Characters are not able to be converted to numeric and show as NA which explains why we cannot get the mean for the character vector.
 
-Part D: Perform data conversions and operations on variables. 
-```{r}
+**Part D: Perform data conversions and operations on variables.**
+```{r operations}
+
 as.numeric(pull(prob1_df, samp_greater)) * pull(prob1_df, samp)
 as.factor(pull(prob1_df, samp_greater)) * pull(prob1_df, samp)
 as.numeric(as.factor(pull(prob1_df, samp_greater))) * pull(prob1_df, samp)
+
 ```
+It does not work to use numerical operations on a factor, you must convert back to numeric first. 
 
 #### Problem 2: 
 
-Part A: Load datasets.
+**Part A: Load datasets.**
 ```{r penguins}
+
 data("penguins", package = "palmerpenguins")
+
 ```
 
-Part B: Describe penguin datasets. 
+**Part B: Describe penguin dataset.**
 
 The dataset penguins is `r nrow(penguins)` observations (rows) with information on `r ncol(penguins)` variables (columns). It contains variables: `r names(penguins)`. The variable species is a `r class(pull(penguins, "species"))` and contains the options: `r levels(pull(penguins, "species"))`. The variable island is a `r class(pull(penguins, "island"))` and contains the options: `r levels(pull(penguins, "island"))`. The variable bill_length_mm is `r class(pull(penguins, "bill_length_mm"))`. The variable bill_depth_mm is `r class(pull(penguins, "bill_depth_mm"))`. The variable flipper_length_mm is an `r class(pull(penguins, "flipper_length_mm"))`. The variable body_mass_g is an `r class(pull(penguins, "body_mass_g"))`. The variable sex is a `r class(pull(penguins, "sex"))` and contains the options: `r levels(pull(penguins, "sex"))`. The variable year is an `r class(pull(penguins, "body_mass_g"))`. The mean flipper length is `r mean(pull(penguins, "flipper_length_mm"), na.rm=TRUE)`.
 
-Part C: Make a plot. 
+**Part C: Make a plot.**
 ```{r plots}
-ggplot(data = penguins, aes(bill_length_mm, flipper_length_mm, color = species)) + geom_point()
+
+ggplot(data = penguins, aes(bill_length_mm, flipper_length_mm, 
+                            color = species)) + geom_point()
 
 ggsave("scatter_penguins.pdf", height = 4, width = 4)
 
